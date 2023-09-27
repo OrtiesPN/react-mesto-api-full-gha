@@ -1,0 +1,49 @@
+.tooltip__container {
+  width: 280px;
+  box-sizing: border-box;
+  padding: 50px 18px 50px 18px;
+  background-color: white;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  border: none;
+  position: relative;
+}
+
+@media screen and (min-width: 615px) {
+  .tooltip__container {
+    width: 430px;
+    padding: 60px 36px 60px 36px;
+  }
+}
+
+.tooltip__sign {
+    margin: 0 auto 0;
+  width: 120px;
+  height: 120px;
+  background-size: 120px 120px;
+}
+
+.tooltip__sign_success {
+  background-image: url(../../images/success.svg);
+}
+
+.tooltip__sign_fail {
+  background-image: url(../../images/fail.svg);
+}
+
+.tooltip__message {
+  margin: 40px 0 0 0;
+  color: #000;
+  text-align: center;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: normal;
+}
+
+@media screen and (min-width: 615px) {
+  .tooltip__message {
+    margin: 32px 0 0 0;
+    font-size: 24px;
+  }
+}

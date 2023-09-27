@@ -1,0 +1,28 @@
+@keyframes loader {
+    from {
+        color: rgb(0, 0, 0);
+        rotate: 0deg;
+        border-width: 10px;
+    }
+    50% {
+        color: rgb(255, 255, 255);
+        border-width: 15px;
+    }
+    to {
+        color: rgb(0, 0, 0);
+        rotate: 359deg;
+        border-width: 10px;
+    }
+}
+
+.loader {
+    margin: 50px auto 50px;
+    box-sizing: border-box;
+    width: 100px;
+    height: 100px;
+    color: whitesmoke;
+    border: 10px dotted currentColor;
+    border-radius: 50%;
+    animation: loader 2s infinite normal ease ;
+}
+
