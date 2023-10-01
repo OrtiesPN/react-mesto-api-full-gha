@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
 
+const { SECRET_KEY = 'some-secret-key' } = process.env;
 const BadRequestError = require('../errors/bad-request-err');
 const NotFoundError = require('../errors/not-found-error');
 const ConflictError = require('../errors/conflict-err');
@@ -40,7 +41,7 @@ module.exports.signin = (req, res, next) => {
 
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, 'some-secret-key');
+      const token = jwt.sign({ _id: user._id }, SECRET_KEY);
       // res.send({ token });
       res.status(200)
         .cookie('jwt', token, {
@@ -62,44 +63,6 @@ module.exports.signin = (req, res, next) => {
       next(err);
     });
 };
-
-// module.exports.signout = async (req, res, next) => {
-//   try {
-//     // req.session = null;
-//     req.session = null;
-//     return res.status(200)
-//       .cookie('jwt', '', {
-//         httpOnly: true,
-//         sameSite: true,
-//         expires: new Date(0),
-//       })
-//       .send({ message: 'Вы вышли из аккаунта' });
-//   } catch (err) {
-//     next(err);
-//   }
-// };
-
-// module.exports.signout = (req, res, next) => {
-//   const user = req.body;
-//   User.findById(user)
-//     .then(() => {
-//       const token = jwt.sign({ _id: user }, 'some-secret-key');
-//       res.status(200)
-//         .cookie('jwt', token, {
-//           httpOnly: true,
-//           secure: true,
-//           expires: new Date(0),
-//         })
-//         .send({ message: 'Вы вышли из аккаунта' });
-//     })
-//     .catch(next);
-// };
-
-// res.cookie('token', '', {
-//   httpOnly: true,
-//   secure: true,
-//   expires: new Date(0)
-// });
 
 // Другие контроллеры пользователей
 

@@ -6,7 +6,6 @@ const {
   getUserById,
   editUserData,
   editUserAvatar,
-  // signout,
 } = require('../controllers/users');
 const { urlRegex } = require('../utils/constants');
 
@@ -28,6 +27,5 @@ router.patch('/me/avatar', celebrate({
     avatar: Joi.string().pattern(urlRegex),
   }),
 }), editUserAvatar);
-// router.post('/me/signout', signout);
 
 module.exports = router;

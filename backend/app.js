@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
@@ -6,6 +7,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 const cors = require('cors');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { PORT = 3000, DB_URL = 'mongodb://localhost:27017/mestodb' } = process.env;
 
@@ -17,7 +19,6 @@ const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
 });
-app.use(limiter);
 
 app.use(helmet());
 
@@ -31,7 +32,12 @@ mongoose.connect(DB_URL, {
   useUnifiedTopology: true,
 });
 
+app.use(requestLogger);
+app.use(limiter);
+
 app.use('/', require('./routes/index'));
+
+app.use(errorLogger);
 
 app.use(errors());
 
