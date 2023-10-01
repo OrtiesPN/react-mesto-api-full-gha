@@ -54,5 +54,5 @@ class Auth {
 }
 
 export const auth = new Auth({
-  baseUrl: "http://localhost:3000"
+  baseUrl: "http://api.mesto-orties.nomoredomainsrocks.ru"
 });
