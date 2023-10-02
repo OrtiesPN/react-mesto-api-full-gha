@@ -9,8 +9,8 @@
 
 ## Ссылки на проект
 
-IP-адрес x.x.x.x
+IP-адрес 158.160.112.206
 
-Frontend https://...
+Frontend https://mesto-orties.nomoredomainsrocks.ru
 
-Backend https://...
+Backend https://api.mesto-orties.nomoredomainsrocks.ru

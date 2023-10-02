@@ -54,5 +54,5 @@ class Auth {
 }
 
 export const auth = new Auth({
-  baseUrl: "http://api.mesto-orties.nomoredomainsrocks.ru"
+  baseUrl: "https://api.mesto-orties.nomoredomainsrocks.ru"
 });
