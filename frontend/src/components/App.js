@@ -185,7 +185,7 @@ function App() {
     auth.signOut()
       .then(() => {
         setLoggedIn(false);
-        navigate('/sign-in');
+        // navigate('/sign-in');
       })
       .catch(err => {
         console.error(`Signout failed: ${err}`);
@@ -193,41 +193,28 @@ function App() {
   }
 
   useEffect(() => {
-    if (loggedIn) {
-      auth.getUserInfo().then((res) => {
-        setUserEmail(res.email);
-        setLoggedIn(true);
-        navigate('/')
-      })
-      .catch(err => {
-        console.error(`Login failed: ${err}`);      
-      })
-    } 
-  }, [navigate, loggedIn]);
-
-  // загрузка изначального массива карточек и установка пользователя
-  useEffect(() => {
-    if (loggedIn) {
       setIsLoading(true);
-      Promise.all([api.getUserInfo(), api.getInitialCards()])
-        .then(([userData, cardsData]) => {
-          setCurrentUser(userData);
-          const cardList = cardsData.reverse().map((data) => ({
-            id: data._id,
-            ownerId: data.owner._id,
-            name: data.name,
-            link: data.link,
-            likes: data.likes,
-          }));
-          setCards(cardList);
-          setIsLoading(false);
-        })
-        .finally(() => {
-          setIsLoading(false);
-        })
-        .catch((error) => console.error(`Fail to load initial cards: ${error}`));
-    }
-  }, [loggedIn]);
+    Promise.all([api.getUserInfo(), api.getInitialCards()])
+      .then(([userData, cardsData]) => {
+        setCurrentUser(userData);
+        setUserEmail(userData.email);
+        setLoggedIn(true);
+        navigate('/');
+        const cardList = cardsData.reverse().map((data) => ({
+          id: data._id,
+          ownerId: data.owner._id,
+          name: data.name,
+          link: data.link,
+          likes: data.likes,
+        }));
+        setCards(cardList);
+        setIsLoading(false);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      })
+      .catch((error) => console.error(error));
+    }, [navigate]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
