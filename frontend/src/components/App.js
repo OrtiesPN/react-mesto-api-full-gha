@@ -207,7 +207,6 @@ function App() {
 
   // загрузка изначального массива карточек и установка пользователя
   useEffect(() => {
-    if (loggedIn) {
       setIsLoading(true);
       Promise.all([api.getUserInfo(), api.getInitialCards()])
         .then(([userData, cardsData]) => {
@@ -226,8 +225,7 @@ function App() {
           setIsLoading(false);
         })
         .catch((error) => console.error(`Fail to load initial cards: ${error}`));
-    }
-  }, [loggedIn]);
+    }, []);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>

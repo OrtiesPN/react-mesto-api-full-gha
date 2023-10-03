@@ -9,7 +9,7 @@
 
 ## Ссылки на проект
 
-IP-адрес 158.160.112.206
+IP 158.160.112.206
 
 Frontend https://mesto-orties.nomoredomainsrocks.ru
 
