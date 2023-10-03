@@ -6,7 +6,7 @@ export default function Card( props ) {
   const currentUser = useContext(CurrentUserContext);
   const isOwner = currentUser._id === props.ownerId;
   const [counterLikes, setCounterLikes] = useState(props.likes.length);
-  const [isLiked, setIsLiked] = useState(props.likes.some(like => like._id === currentUser._id));
+  const [isLiked, setIsLiked] = useState();
 
   function handleLikeClick() {
     if (isLiked) {
@@ -25,6 +25,10 @@ export default function Card( props ) {
   function handleClick() {
     props.onCardClick({name: props.name, link: props.link})
   }
+
+  useEffect(() => {
+    setIsLiked(props.likes.some(like => like._id === currentUser._id));
+  }, [props, currentUser]);
   
   return (
     <li className="card">
