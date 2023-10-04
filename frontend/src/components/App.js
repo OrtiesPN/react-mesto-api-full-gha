@@ -147,7 +147,28 @@ function App() {
       .catch((error) => console.error(`Fail to add new place: ${error}`));
   }
 
-  // Логика регистрации и логина
+  // Получение и отрисовка карточек
+
+  function getCards() {
+    setIsLoading(true);
+    api.getInitialCards()
+    .then((cardsData) => {
+      const cardList = cardsData.reverse().map((data) => ({
+        id: data._id,
+        ownerId: data.owner._id,
+        name: data.name,
+        link: data.link,
+        likes: data.likes,
+      }));
+      setCards(cardList);
+    })
+    .finally(() => {
+      setIsLoading(false);
+    })
+    .catch((error) => console.error(`Ошибка загрузки контента ${error}`));
+  }
+
+  // Логика регистрации и логина/выхода
 
   function handleRegister(password, email) {
     auth
@@ -185,36 +206,28 @@ function App() {
     auth.signOut()
       .then(() => {
         setLoggedIn(false);
-        // navigate('/sign-in');
       })
+      .finally(() => navigate('/sign-in'))
       .catch(err => {
         console.error(`Signout failed: ${err}`);
       });
   }
 
+  // Эффект проверки токена в куках и редиректа
+
   useEffect(() => {
-      setIsLoading(true);
-    Promise.all([api.getUserInfo(), api.getInitialCards()])
-      .then(([userData, cardsData]) => {
-        setCurrentUser(userData);
-        setUserEmail(userData.email);
-        setLoggedIn(true);
-        navigate('/');
-        const cardList = cardsData.reverse().map((data) => ({
-          id: data._id,
-          ownerId: data.owner._id,
-          name: data.name,
-          link: data.link,
-          likes: data.likes,
-        }));
-        setCards(cardList);
-        setIsLoading(false);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      })
-      .catch((error) => console.error(error));
-    }, [navigate]);
+    if (!loggedIn) {
+    api.getUserInfo()
+    .then((userData) => {
+      setLoggedIn(true);
+      setCurrentUser(userData);
+      setUserEmail(userData.email);
+      getCards();
+      navigate('/');
+    })
+    .catch((error) => console.error(`Ошибка авторизации ${error}`));
+  }
+  }, [loggedIn, navigate]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
