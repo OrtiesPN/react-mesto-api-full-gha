@@ -192,6 +192,7 @@ function App() {
       .then((res) => {
         setCurrentUser(res);
         setLoggedIn(true);
+        getCards();
         window.scrollTo(0, 0);
         navigate("/");
       })
