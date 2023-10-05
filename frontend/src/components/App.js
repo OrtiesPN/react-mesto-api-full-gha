@@ -191,6 +191,7 @@ function App() {
       .setAuthorization(password, email)
       .then((res) => {
         setCurrentUser(res);
+        setUserEmail(res.email);
         setLoggedIn(true);
         getCards();
         window.scrollTo(0, 0);
